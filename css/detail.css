@@ -1,0 +1,27 @@
+@import url(./index.css);
+
+.detail {
+  background: white;
+  position: absolute;
+  display: none;
+  width: 50vw;
+  height: 80vh;
+  bottom: 50px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  z-index: 1000;
+}
+
+.detail--apper {
+  display: block;
+}
+
+.noHover {
+  pointer-events: none;
+}
+
+.blurry {
+  opacity: 0.1;
+}

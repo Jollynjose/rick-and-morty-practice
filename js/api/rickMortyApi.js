@@ -1,6 +1,6 @@
 const apiUrl = 'https://rickandmortyapi.com/';
 
-async function getCountByLocations() {
+const getCountByLocations = async () => {
   const query = `
   query{
     characters(page: 1){
@@ -18,21 +18,22 @@ async function getCountByLocations() {
   };
   const { data } = await (await fetch(`${apiUrl}/graphql`, options)).json();
   return data?.characters.info.count;
-}
+};
 
-export async function getRandomLocationImage() {
+export const getRandomLocationImage = async () => {
   const count = await getCountByLocations();
   const randomNumber = Math.floor(Math.random() * count);
+  const id = randomNumber !== 0 ? randomNumber : 1;
 
   const data = await (
-    await fetch(`${apiUrl}/api/character/${randomNumber}`, {
+    await fetch(`${apiUrl}/api/character/${id}`, {
       method: 'GET',
     })
   ).json();
   return data.image;
-}
+};
 
-export async function getListCharacters(page = 1) {
+export const getListCharacters = async (page = 1) => {
   const query = `query{
   characters(page: ${page}){
     results{
@@ -55,10 +56,9 @@ export async function getListCharacters(page = 1) {
     await fetch(`${apiUrl}/graphql`, options)
   ).json();
   return data?.characters.results;
-}
+};
 
-export async function getCharacterById(id) {
+export const getCharacterById = async (id) => {
   const data = await (await fetch(`${apiUrl}/api/character/${id}`)).json();
-  console.log(data);
   return data;
-}
+};
