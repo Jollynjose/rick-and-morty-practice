@@ -25,3 +25,7 @@
 .blurry {
   opacity: 0.1;
 }
+
+.body--scrolloff {
+  overflow: hidden;
+}

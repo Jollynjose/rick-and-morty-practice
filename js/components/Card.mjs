@@ -1,4 +1,5 @@
 import { Details } from './Details.mjs';
+import { onInsertDetail } from '../utils/screenFunctions.mjs';
 
 export const Card = (character) => {
   //creating card node
@@ -14,8 +15,11 @@ export const Card = (character) => {
   //creating info column
   const div = document.createElement('div');
   div.className = 'card__info';
-  div.appendChild(title);
-  div.appendChild(status);
+  //inserting info
+  const info = [title, status];
+  info.forEach((value) => {
+    div.appendChild(value);
+  });
   //creating img node
   const img = document.createElement('img');
   img.src = character.image;
@@ -24,11 +28,10 @@ export const Card = (character) => {
   const figure = document.createElement('figure');
   figure.appendChild(img);
   figure.className = 'card__figure';
-  // adding event listener on card
+  // adding event listener on card with details
   card.addEventListener('click', () => {
-    document.body.style.overflow = 'hidden';
-    window.scrollTo(0, 0);
-    Details();
+    onInsertDetail();
+    Details(character.id);
   });
   // appending nodes on card
   const nodes = [figure, div];

@@ -1,11 +1,12 @@
 import { randomPic } from './utils/randomPic.mjs';
 import { generateList } from './utils/generateList.mjs';
-import { Card } from './components/Card.mjs';
+import { moreButtonEvent } from './utils/events.mjs';
 
 const path = window.location.pathname || '';
 switch (path) {
   case '/pages/list.html':
     generateList();
+    moreButtonEvent();
     break;
   case '/':
   case '/index.html':
