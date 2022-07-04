@@ -1,6 +1,6 @@
 import { randomPic } from './utils/randomPic.mjs';
 import { generateList } from './utils/generateList.mjs';
-import { moreButtonEvent } from './utils/events.mjs';
+import { moreButtonEvent } from './utils/listeners.mjs';
 
 const path = window.location.pathname || '';
 switch (path) {

@@ -1,14 +1,13 @@
 @import url(./index.css);
 @import url(./detail.css);
 
-.list {
+.list__items {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   row-gap: 1rem;
   column-gap: 1rem;
   padding: 0.5rem;
-  
 }
 
 .card {
@@ -53,5 +52,15 @@
   text-align: left;
   display: inline;
   margin: 0;
-  color: rgb(8, 210, 255);
+}
+
+.list__more--button {
+  padding: 1rem;
+}
+
+.list__more {
+  width: 100%;
+  padding: 1rem 0;
+  display: flex;
+  justify-content: center;
 }

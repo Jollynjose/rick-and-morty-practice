@@ -1,5 +1,5 @@
 import { Details } from './Details.mjs';
-import { onInsertDetail } from '../utils/screenFunctions.mjs';
+import { setPositionDetail } from '../utils/screenFunctions.mjs';
 
 export const Card = (character) => {
   //creating card node
@@ -9,17 +9,24 @@ export const Card = (character) => {
   const title = document.createElement('h3');
   title.textContent = character.name;
   title.className = 'card__info__title';
-  const status = document.createElement('h6');
-  status.textContent = `${character.species}-${character.status}`;
-  status.className = 'card__info__status';
+  const info = document.createElement('h6');
+  info.textContent = `${character.species}-${character.status}`;
+
+  const isAlive =
+    character.status === 'Alive'
+      ? 'green'
+      : character.status === 'Dead'
+      ? 'red'
+      : 'grey';
+
+  info.className = 'card__info__status';
+  info.style.color = isAlive;
   //creating info column
   const div = document.createElement('div');
   div.className = 'card__info';
   //inserting info
-  const info = [title, status];
-  info.forEach((value) => {
-    div.appendChild(value);
-  });
+  div.appendChild(title);
+  div.appendChild(info);
   //creating img node
   const img = document.createElement('img');
   img.src = character.image;
@@ -30,7 +37,6 @@ export const Card = (character) => {
   figure.className = 'card__figure';
   // adding event listener on card with details
   card.addEventListener('click', () => {
-    onInsertDetail();
     Details(character.id);
   });
   // appending nodes on card

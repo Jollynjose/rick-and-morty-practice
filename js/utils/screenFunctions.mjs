@@ -1,10 +1,10 @@
 export const onBlurBackground = () => {
-  const detail = document.querySelector('.detail');
   const header = document.querySelector('header');
+  const list = document.querySelector('.list__items');
+  const more = document.querySelector('.list__more');
   header.classList.toggle('blurry');
-  const list = document.querySelector('.list');
   list.classList.toggle('blurry');
-  detail.classList.toggle('detail--apper');
+  more.classList.toggle('blurry');
 };
 
 export const onToggleHoverCards = () => {
@@ -17,21 +17,21 @@ export const onToggleHoverCards = () => {
 export const onShowDetail = () => {
   onToggleHoverCards();
   onBlurBackground();
+  document.body.classList.toggle('body--scrolloff');
 };
 
-export const onInsertDetail = ()=>{
-  const body = document.querySelector('body');
-  body.classList.toggle('body--scrolloff')
-  const detail = document.createElement('section');
-  body.appendChild(detail);
-  detail.classList.add('detail');
-  window.scrollTo(0, 0);
-}
+export const setPositionDetail = () => {
+  const topInit = 70;
+  const screenPosition = window.pageYOffset;
+  const detail = document.querySelector('.detail');
+  detail.style.top = `${topInit + screenPosition}px`;
+};
 
-export const onRemoveDetail = (event) => {
-  event.stopPropagation();
-  onShowDetail();
-  const body = document.querySelector('body');
-  body.classList.toggle('body--scrolloff');
-  body.removeChild(document.querySelector('.detail'));
+export const onRemoveDetail = () => {
+  const main = document.querySelector('main');
+  const detail = document.querySelector('.detail');
+  if (detail) {
+    onShowDetail();
+    main.removeChild(detail);
+  }
 };

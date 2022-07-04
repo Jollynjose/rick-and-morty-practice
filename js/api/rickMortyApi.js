@@ -1,6 +1,6 @@
 const apiUrl = 'https://rickandmortyapi.com/';
 
-const getCountByLocations = async () => {
+export const getCountByCharacters = async () => {
   const query = `
   query{
     characters(page: 1){
@@ -21,7 +21,7 @@ const getCountByLocations = async () => {
 };
 
 export const getRandomLocationImage = async () => {
-  const count = await getCountByLocations();
+  const count = await getCountByCharacters();
   const randomNumber = Math.floor(Math.random() * count);
   const id = randomNumber !== 0 ? randomNumber : 1;
 

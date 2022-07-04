@@ -3,19 +3,43 @@
 .detail {
   background: white;
   position: absolute;
-  display: none;
   width: 50vw;
   height: 80vh;
-  bottom: 50px;
   left: 0;
   right: 0;
   margin: auto;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
 
-.detail--apper {
-  display: block;
+/* CSS */
+.detail__button {
+  padding: 1rem 5rem;
+  font-size: 1rem;
+}
+
+.detail__information {
+  height: fit-content;
+}
+
+.detail__information--figure > figcaption {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.detail__information--list {
+  list-style: none;
+  padding: 0;
+}
+
+.detail__information--list > li {
+  padding: 0.5rem;
+  font-size: 1.2rem;
 }
 
 .noHover {
