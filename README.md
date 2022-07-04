@@ -6,7 +6,13 @@ I made this practice with objective to practices DOM stuff.
 
 
 
+## Authors
+
+- [@Jollynjose](https://www.github.com/Jollynjose)
+
+
 ## Run Locally
+
 
 Clone the project
 
@@ -20,11 +26,17 @@ Go to the project directory
   cd rick--and--morty-Practice
 ```
 
-Open ```index.html``` file
+
+Install live-server in your global enviroment
+
+```bash
+  npm install -g live-server
+```
+
+Run the project
+```bash
+  live-server
+```
 
 
-
-## Authors
-
-- [@Jollynjose](https://www.github.com/Jollynjose)
 
