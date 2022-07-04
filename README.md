@@ -1,18 +1,8 @@
-
 # Rick and morty practice
 
 I made this practice with objective to practices DOM stuff.
 
-
-
-
-## Authors
-
-- [@Jollynjose](https://www.github.com/Jollynjose)
-
-
 ## Run Locally
-
 
 Clone the project
 
@@ -26,7 +16,6 @@ Go to the project directory
   cd rick--and--morty-Practice
 ```
 
-
 Install live-server in your global enviroment
 
 ```bash
@@ -34,9 +23,11 @@ Install live-server in your global enviroment
 ```
 
 Run the project
+
 ```bash
   live-server
 ```
 
+## Authors
 
-
+- [@Jollynjose](https://www.github.com/Jollynjose)
