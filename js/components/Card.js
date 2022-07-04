@@ -1,5 +1,4 @@
-import { Details } from './Details.mjs';
-import { setPositionDetail } from '../utils/screenFunctions.mjs';
+import { Details } from './Details.js';
 
 export const Card = (character) => {
   //creating card node
@@ -36,8 +35,8 @@ export const Card = (character) => {
   figure.appendChild(img);
   figure.className = 'card__figure';
   // adding event listener on card with details
-  card.addEventListener('click', () => {
-    Details(character.id);
+  card.addEventListener('click', async () => {
+    await Details(character.id);
   });
   // appending nodes on card
   const nodes = [figure, div];
