@@ -28,10 +28,14 @@ export const setPositionDetail = () => {
 };
 
 export const onRemoveDetail = () => {
-  const main = document.querySelector('main');
   const detail = document.querySelector('.detail');
-  if (detail) {
+  const detailDiv = document.querySelector('.detail__information');
+  const detailButton = document.querySelector('.detail__button');
+  detail.style.display = 'none';
+
+  if (detailDiv && detailButton) {
     onShowDetail();
-    main.removeChild(detail);
+    detail.removeChild(detailDiv);
+    detail.removeChild(detailButton);
   }
 };

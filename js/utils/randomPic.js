@@ -1,11 +1,11 @@
-import { getRandomLocationImage } from '../api/rickMortyApi.js';
+import { getRandomCharacterImage } from '../api/rickMortyApi.js';
 
 export const randomPic = async () => {
   const img = document.createElement('img');
   const main = document.querySelector('.random');
   const figureCaption = document.createElement('figcaption');
 
-  const random = await getRandomLocationImage();
+  const random = await getRandomCharacterImage();
   img.src = random;
   img.alt = 'Random pic';
   img.className = 'random__picture';

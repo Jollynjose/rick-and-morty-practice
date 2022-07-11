@@ -1,15 +1,20 @@
 import { Details } from './Details.js';
-
 export const Card = (character) => {
-  //creating card node
-  const card = document.createElement('article');
-  card.className = 'card';
-  //creating title and status node
-  const title = document.createElement('h3');
-  title.textContent = character.name;
-  title.className = 'card__info__title';
-  const info = document.createElement('h6');
-  info.textContent = `${character.species}-${character.status}`;
+  const article = document.createElement('article');
+  article.classList.add('card');
+
+  const template = document.getElementById('card--template');
+  const characterCard = document.importNode(template.content, true);
+
+  const characterCardFigure = characterCard.querySelector('.card__figure');
+  const characterCardImg = characterCard.querySelector('img');
+  const characterCardH3 = characterCard.querySelector('.card__info__name');
+  const characterCardH6 = characterCard.querySelector('.card__info__status');
+  const characterCardDiv = characterCard.querySelector('.card__info');
+
+  characterCardImg.src = character.image;
+  characterCard.alt = character.name;
+  characterCardFigure.appendChild(characterCardImg);
 
   const isAlive =
     character.status === 'Alive'
@@ -18,31 +23,19 @@ export const Card = (character) => {
       ? 'red'
       : 'grey';
 
-  info.className = 'card__info__status';
-  info.style.color = isAlive;
-  //creating info column
-  const div = document.createElement('div');
-  div.className = 'card__info';
-  //inserting info
-  div.appendChild(title);
-  div.appendChild(info);
-  //creating img node
-  const img = document.createElement('img');
-  img.src = character.image;
-  img.alt = `${character.name}-image`;
-  // creating figure node and appending img
-  const figure = document.createElement('figure');
-  figure.appendChild(img);
-  figure.className = 'card__figure';
-  // adding event listener on card with details
-  card.addEventListener('click', async () => {
+  characterCardH3.innerHTML = character.name;
+  characterCardH6.innerHTML = `${character.species}-${character.status}`;
+  characterCardH6.style.color = isAlive;
+  characterCardDiv.appendChild(characterCardH3);
+  characterCardDiv.appendChild(characterCardH6);
+
+  article.appendChild(characterCardFigure);
+  article.appendChild(characterCardDiv);
+
+  document.querySelector('.list__items').appendChild(article);
+
+  article.addEventListener('click', async () => {
     await Details(character.id);
   });
-  // appending nodes on card
-  const nodes = [figure, div];
-  nodes.forEach((value) => {
-    card.appendChild(value);
-  });
-
-  return card;
+  
 };

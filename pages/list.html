@@ -19,13 +19,47 @@
         </nav>
     </header>
     <main>
+        <section class="detail">
+            <template id="detail--template">
+                <div class="detail__information">
+                    <figure class="detail__information--figure">
+                        <img>
+                        <figcaption></figcaption>
+                    </figure>
+                    <ul class="detail__information--list">
+                        <li >Status: </li>
+                        <li>Species: </li>
+                        <li>Type: </li>
+                        <li>Gender: </li>
+                        <li>Origin: </li>
+                        <li>Location: </li>
+                    </ul>
+                </div>
+                <button class="detail__button">Close</button>
+            </template>
+        </section>
+
+
         <section class="list">
-            <section class="list__items"></section>
+            <section class="list__items">
+                <template id="card--template">
+                    <figure class="card__figure">
+                        <img>
+                    </figure>
+                    <div class="card__info">
+                        <h3 class="card__info__name"></h3>
+                        <h6 class="card__info__status">-</h6>
+                    </div>
+                </template>
+            </section>
+
             <section class="list__more">
+                infinite scrolling changes button
                 <button type="button" class="list__more--button">
                     More Characters
                 </button>
             </section>
+
         </section>
 
     </main>

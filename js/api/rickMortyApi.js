@@ -1,5 +1,9 @@
-const apiUrl = 'https://rickandmortyapi.com/';
+import { Character } from '../models/Chracter.js';
+import { PaginationCharacter } from '../models/CountCharacter.js';
 
+const apiUrl = 'https://rickandmortyapi.com/';
+// TODO: dont nested async functions
+// TODO: make models with classes
 export const getCountByCharacters = async () => {
   const query = `
   query{
@@ -16,21 +20,30 @@ export const getCountByCharacters = async () => {
     },
     body: JSON.stringify({ query }),
   };
-  const { data } = await (await fetch(`${apiUrl}/graphql`, options)).json();
-  return data?.characters.info.count;
+  const response = await fetch(`${apiUrl}/graphql`, options);
+  const { data } = await response.json();
+  
+  const characters = data.characters;
+  const characterInfo = characters.info;
+  const characterCount = characterInfo.count;
+
+  const paginationCharacter = new PaginationCharacter(1, characterCount);
+  return paginationCharacter;
 };
 
-export const getRandomLocationImage = async () => {
-  const count = await getCountByCharacters();
-  const randomNumber = Math.floor(Math.random() * count);
+export const getRandomCharacterImage = async () => {
+  const paginationCharacter = await getCountByCharacters();
+
+  const randomNumber = Math.floor(Math.random() * paginationCharacter.count);
   const id = randomNumber !== 0 ? randomNumber : 1;
 
-  const data = await (
-    await fetch(`${apiUrl}/api/character/${id}`, {
-      method: 'GET',
-    })
-  ).json();
-  return data.image;
+  const response = await fetch(`${apiUrl}/api/character/${id}`, {
+    method: 'GET',
+  });
+  const data = await response.json();
+
+  const imageUrl = data.image;
+  return imageUrl;
 };
 
 export const getListCharacters = async (page = 1) => {
@@ -52,13 +65,41 @@ export const getListCharacters = async (page = 1) => {
     },
     body: JSON.stringify({ query }),
   };
-  const { data = {} } = await (
-    await fetch(`${apiUrl}/graphql`, options)
-  ).json();
-  return data?.characters.results;
+  const response = await fetch(`${apiUrl}/graphql`, options);
+  const charactersResponse = await response.json();
+
+  const charactersResponseRaw = charactersResponse.data.characters;
+
+  const charactersResponseResults = charactersResponseRaw.results;
+
+  const characters = charactersResponseResults.map((character) => {
+    return new Character(
+      character.id,
+      character.name,
+      character.status,
+      character.species,
+      character.image
+    );
+  });
+
+  return characters;
 };
 
 export const getCharacterById = async (id) => {
-  const data = await (await fetch(`${apiUrl}/api/character/${id}`)).json();
-  return data;
+  const data = await fetch(`${apiUrl}/api/character/${id}`);
+  const character = await data.json();
+  return new Character(
+    character.id,
+    character.name,
+    character.status,
+    character.species,
+    character.image,
+    character.type,
+    character.gender,
+    character.origin,
+    character.location,
+    character.episode,
+    character.url,
+    character.created
+  );
 };
