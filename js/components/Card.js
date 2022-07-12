@@ -1,20 +1,16 @@
 import { Details } from './Details.js';
 export const Card = (character) => {
-  const article = document.createElement('article');
-  article.classList.add('card');
-
   const template = document.getElementById('card--template');
-  const characterCard = document.importNode(template.content, true);
+  const cardNodeTemplate = document.importNode(template.content, true);
 
-  const characterCardFigure = characterCard.querySelector('.card__figure');
-  const characterCardImg = characterCard.querySelector('img');
-  const characterCardH3 = characterCard.querySelector('.card__info__name');
-  const characterCardH6 = characterCard.querySelector('.card__info__status');
-  const characterCardDiv = characterCard.querySelector('.card__info');
+  const [cardArticle] = cardNodeTemplate.children;
+  const [cardFigure, cardDiv] = cardArticle.children;
 
-  characterCardImg.src = character.image;
-  characterCard.alt = character.name;
-  characterCardFigure.appendChild(characterCardImg);
+  const [cardFigureImg] = cardFigure.children;
+  const [cardDivH3, cardDivH6] = cardDiv.children;
+
+  cardFigureImg.src = character.image;
+  cardFigureImg.alt = character.name;
 
   const isAlive =
     character.status === 'Alive'
@@ -23,19 +19,13 @@ export const Card = (character) => {
       ? 'red'
       : 'grey';
 
-  characterCardH3.innerHTML = character.name;
-  characterCardH6.innerHTML = `${character.species}-${character.status}`;
-  characterCardH6.style.color = isAlive;
-  characterCardDiv.appendChild(characterCardH3);
-  characterCardDiv.appendChild(characterCardH6);
+  cardDivH3.innerHTML = character.name;
+  cardDivH6.innerHTML = `${character.species}-${character.status}`;
+  cardDivH6.style.color = isAlive;
 
-  article.appendChild(characterCardFigure);
-  article.appendChild(characterCardDiv);
+  document.querySelector('.list__items').appendChild(cardNodeTemplate);
 
-  document.querySelector('.list__items').appendChild(article);
-
-  article.addEventListener('click', async () => {
+  cardArticle.addEventListener('click', async () => {
     await Details(character.id);
   });
-  
 };
