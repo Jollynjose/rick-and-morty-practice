@@ -1,40 +1,40 @@
-import { getCharacterById } from '../api/rickMortyApi';
+import { getCharacterById } from "../api/rickMortyApi";
 // TODO: USE TYPE TEMPLATES AND RENDER FUNCTION
 
 const onToggleHoverCards = () => {
-  const cards = document.querySelectorAll('.card');
+  const cards = document.querySelectorAll(".card");
   cards.forEach((value) => {
-    value.classList.toggle('noHover');
+    value.classList.toggle("noHover");
   });
 };
 
 const onBlurBackground = () => {
-  const header = document.querySelector('header');
-  const list = document.querySelector('.list__items');
-  const more = document.querySelector('.list__more');
-  header.classList.toggle('blurry');
-  list.classList.toggle('blurry');
-  more.classList.toggle('blurry');
+  const header = document.querySelector("header");
+  const list = document.querySelector(".list__items");
+  const more = document.querySelector(".list__more");
+  header.classList.toggle("blurry");
+  list.classList.toggle("blurry");
+  more.classList.toggle("blurry");
 };
 
 const setPositionDetail = () => {
   const topInit = 70;
   const screenPosition = window.pageYOffset;
-  const detail = document.querySelector('.detail');
+  const detail = document.querySelector(".detail");
   detail.style.top = `${topInit + screenPosition}px`;
 };
 
 const onShowDetail = () => {
   onToggleHoverCards();
   onBlurBackground();
-  document.body.classList.toggle('body--scrolloff');
+  document.body.classList.toggle("body--scrolloff");
 };
 
 const onRemoveDetail = () => {
-  const detail = document.querySelector('.detail');
-  const detailDiv = document.querySelector('.detail__information');
-  const detailButton = document.querySelector('.detail__button');
-  detail.style.display = 'none';
+  const detail = document.querySelector(".detail");
+  const detailDiv = document.querySelector(".detail__information");
+  const detailButton = document.querySelector(".detail__button");
+  detail.style.display = "none";
 
   if (detailDiv && detailButton) {
     onShowDetail();
@@ -43,11 +43,10 @@ const onRemoveDetail = () => {
   }
 };
 
-
 export const Detail = async (id = 1) => {
   const character = await getCharacterById(id);
 
-  const template = document.getElementById('detail--template');
+  const template = document.getElementById("detail--template");
   const detailNodeTemplate = document.importNode(template.content, true);
 
   const [detailDiv, detailButton] = detailNodeTemplate.children;
@@ -61,7 +60,7 @@ export const Detail = async (id = 1) => {
   figcaption.innerText = character.name;
 
   const liItems = Array.from(liItemsNodes);
-  
+
   liItems.forEach((li) => {
     const information = li.textContent.trim();
     const informationToLowerCase = information.toLowerCase();
@@ -70,14 +69,14 @@ export const Detail = async (id = 1) => {
     li.innerText += character.getInfo(key);
   });
 
-  const detail = document.querySelector('.detail');
-  const listSection = document.querySelector('.list');
+  const detail = document.querySelector(".detail");
+  const listSection = document.querySelector(".list");
 
   detail.appendChild(detailNodeTemplate);
-  detail.style.display = 'flex';
+  detail.style.display = "flex";
 
-  detailButton.addEventListener('click', onRemoveDetail, { once: true });
-  listSection.addEventListener('click', onRemoveDetail, { once: true });
+  detailButton.addEventListener("click", onRemoveDetail, { once: true });
+  listSection.addEventListener("click", onRemoveDetail, { once: true });
 
   onShowDetail();
   setPositionDetail();

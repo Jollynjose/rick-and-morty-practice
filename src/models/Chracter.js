@@ -1,17 +1,17 @@
 export class Character {
   constructor(
     id = 1,
-    name = '',
-    status = '',
-    species = '',
-    image = '',
-    type = '',
-    gender = '',
+    name = "",
+    status = "",
+    species = "",
+    image = "",
+    type = "",
+    gender = "",
     origin = {},
     location = {},
     episode = [],
-    url = '',
-    created = ''
+    url = "",
+    created = ""
   ) {
     this.id = id;
     this.name = name;
@@ -29,11 +29,11 @@ export class Character {
 
   getInfo(key) {
     switch (key) {
-      case 'origin':
-      case 'location':
+      case "origin":
+      case "location":
         return this[key].name;
-      case 'type':
-        return this.type || 'unknown';
+      case "type":
+        return this.type || "unknown";
       default:
         return this[key];
     }

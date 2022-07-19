@@ -1,2 +1,2 @@
-export * from './Chracter';
-export * from './PaginationCharacter';
+export * from "./Chracter";
+export * from "./PaginationCharacter";

@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
@@ -13,9 +14,6 @@ module.exports = {
   },
   devServer: {
     port: '3000',
-    historyApiFallback: {
-      index: './index.html'
-    }
   },
   module: {
     rules: [
@@ -49,5 +47,6 @@ module.exports = {
       template: './src/pages/404.html',
       filename: '404.html',
     }),
+    new ESLintPlugin(),
   ],
 };

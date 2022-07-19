@@ -1,16 +1,14 @@
-import './css/index.css';
-import { CardList, RandomImage } from './components';
+import "./css/index.css";
+import { CardList, RandomImage } from "./components";
 
-window.addEventListener('load', async () => {
-  const path = window.location.pathname || '';
+window.addEventListener("load", async () => {
+  const path = window.location.pathname || "";
   switch (path) {
-    case '/list.html':
+    case "/list.html":
       await CardList();
-      break;
-    case '/about.html':
-    case '/home.html':
+    case "/about.html":
+    case "/home.html":
       await RandomImage();
-      break;
     default:
       break;
   }

@@ -1,11 +1,11 @@
-import { Character, PaginationCharacter } from './../models';
+import { Character, PaginationCharacter } from "./../models";
 
-const apiUrl = 'https://rickandmortyapi.com/';
+const apiUrl = "https://rickandmortyapi.com/";
 
 const options = {
-  method: 'GET',
+  method: "GET",
   headers: {
-    'content-type': 'application/json',
+    "content-type": "application/json",
   },
 };
 
@@ -21,7 +21,7 @@ export const getCountByCharacters = async () => {
   const body = JSON.stringify({ query });
   const response = await fetch(`${apiUrl}/graphql`, {
     ...options,
-    method: 'POST',
+    method: "POST",
     body,
   });
   const { data } = await response.json();
@@ -62,7 +62,7 @@ export const getListCharacters = async (page = 1) => {
   const body = JSON.stringify({ query });
   const response = await fetch(`${apiUrl}/graphql`, {
     ...options,
-    method: 'POST',
+    method: "POST",
     body,
   });
   const charactersResponse = await response.json();
