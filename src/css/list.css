@@ -1,6 +1,3 @@
-@import url(./index.css);
-@import url(./detail.css);
-
 .list__items {
   display: flex;
   justify-content: center;
@@ -81,4 +78,8 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.show {
+  display: block;
 }

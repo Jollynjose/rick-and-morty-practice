@@ -1,4 +1,13 @@
-import { Details } from './Details.js';
+const statusCharacterColor = (status) => {
+  if(status === 'Alive'){
+    return 'green'
+  }else if(status === 'Dead'){
+    return 'red'
+  }else{
+    return 'grey';
+  }
+};
+
 export const Card = (character) => {
   const template = document.getElementById('card--template');
   const cardNodeTemplate = document.importNode(template.content, true);
@@ -9,23 +18,17 @@ export const Card = (character) => {
   const [cardFigureImg] = cardFigure.children;
   const [cardDivH3, cardDivH6] = cardDiv.children;
 
+
+  cardArticle.setAttribute('id', character.id);
+
   cardFigureImg.src = character.image;
   cardFigureImg.alt = character.name;
 
-  const isAlive =
-    character.status === 'Alive'
-      ? 'green'
-      : character.status === 'Dead'
-      ? 'red'
-      : 'grey';
+  const statusColor = statusCharacterColor(character.status)
 
-  cardDivH3.innerHTML = character.name;
-  cardDivH6.innerHTML = `${character.species}-${character.status}`;
-  cardDivH6.style.color = isAlive;
+  cardDivH3.innerText = character.name;
+  cardDivH6.innerText = `${character.species}-${character.status}`;
+  cardDivH6.style.color = statusColor;
 
   document.querySelector('.list__items').appendChild(cardNodeTemplate);
-
-  cardArticle.addEventListener('click', async () => {
-    await Details(character.id);
-  });
 };
