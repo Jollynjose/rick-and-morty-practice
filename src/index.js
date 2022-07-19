@@ -1,5 +1,5 @@
 import './css/index.css';
-import { CardList, RandomImage } from './js/components';
+import { CardList, RandomImage } from './components';
 
 window.addEventListener('load', async () => {
   const path = window.location.pathname || '';

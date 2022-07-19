@@ -1,4 +1,4 @@
-import { Character, PaginationCharacter } from '../models';
+import { Character, PaginationCharacter } from './../models';
 
 const apiUrl = 'https://rickandmortyapi.com/';
 
