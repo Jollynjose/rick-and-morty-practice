@@ -29,19 +29,36 @@ const onAddCharacters = () => {
         const totalItems = list.childElementCount - 1;
 
         if (totalItems !== count) {
-          await CardList(++page);
+          const isCache = localStorage.length > 0;
+          await CardList(++page, isCache);
         }
         loader.classList.toggle("show");
       }
     });
   }
 };
+const charactersLocal = async (page = 1) => {
+  const nextCharacters = await getListCharacters(++page);
+  const charactersJSON = JSON.stringify(nextCharacters);
+  localStorage.setItem("characters", charactersJSON);
+};
 
-export const CardList = async (page = 1) => {
-  const characters = await getListCharacters(page);
-  characters.forEach((character) => {
-    Card(character);
-  });
+export const CardList = async (page = 1, isCache = false) => {
+  if (isCache) {
+    const charactersJSON = localStorage.getItem("characters");
+    if (charactersJSON) {
+      const nextCharacters = JSON.parse(charactersJSON);
+      nextCharacters.forEach((character) => {
+        Card(character);
+      });
+    }
+  } else {
+    const characters = await getListCharacters(page);
+    characters.forEach((character) => {
+      Card(character);
+    });
+  }
+  await charactersLocal(page);
 };
 
 onAddCharacters();

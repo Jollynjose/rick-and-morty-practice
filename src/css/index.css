@@ -1,6 +1,6 @@
-@import url('./about.css');
-@import url('./list.css');
-@import url('./detail.css');
+@import url("./about.css");
+@import url("./list.css");
+@import url("./detail.css");
 
 body,
 html {
@@ -9,11 +9,23 @@ html {
 }
 .random--figure {
   min-width: 30vw;
-  height: 35vh;
+  height: 100%;
+  visibility: hidden;
 }
 
-.random--section{
-  height: 35vh;
+.random--section {
+  height: 320px;
+  margin: 0 0 2rem 0;
+  padding: .125rem 0 0 0;
+}
+.loader--random {
+  width: 60px;
+  height: 60px;
+  display: block;
+  position: absolute;
+  left: 150px;
+  top: 222px;
+  margin: auto;
 }
 
 nav > ul {
