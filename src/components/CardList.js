@@ -9,6 +9,7 @@ const onAddDetail = () => {
       if (clicked?.classList.contains("card")) {
         const id = clicked.getAttribute("id");
         await Detail(+id);
+        list.removeEventListener("click", onAddDetail);
       }
     });
   }

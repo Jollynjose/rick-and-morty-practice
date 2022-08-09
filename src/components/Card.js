@@ -1,11 +1,10 @@
-const statusCharacterColor = (status) => {
-  if (status === "Alive") {
-    return "green";
-  } else if (status === "Dead") {
-    return "red";
-  } else {
-    return "grey";
-  }
+const statusToColor = {
+  Alive: "green",
+  Dead: "red",
+};
+
+const getCharacterColor = (status = "") => {
+  return statusToColor[status] || "grey";
 };
 
 export const Card = (character) => {
@@ -23,7 +22,7 @@ export const Card = (character) => {
   cardFigureImg.src = character.image;
   cardFigureImg.alt = character.name;
 
-  const statusColor = statusCharacterColor(character.status);
+  const statusColor = getCharacterColor(character.status);
 
   cardDivH3.innerText = character.name;
   cardDivH6.innerText = `${character.species}-${character.status}`;
