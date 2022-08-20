@@ -10,7 +10,6 @@ window.addEventListener("load", async () => {
     case "/home.html":
       await RandomImage();
     default:
-      await RandomImage();
       break;
   }
 });
