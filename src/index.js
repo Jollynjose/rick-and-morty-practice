@@ -1,5 +1,6 @@
 import "./css/index.css";
 import { CardList, RandomImage } from "./components";
+import { login, register } from "./scripts/login";
 
 window.addEventListener("load", async () => {
   const path = window.location.pathname || "";
@@ -9,6 +10,9 @@ window.addEventListener("load", async () => {
     case "/about.html":
     case "/home.html":
       await RandomImage();
+    case "/login.html":
+      login();
+      register();
     default:
       break;
   }

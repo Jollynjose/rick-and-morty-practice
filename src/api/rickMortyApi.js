@@ -1,6 +1,6 @@
 import { Character, PaginationCharacter } from "./../models";
 
-const apiUrl = "https://rickandmortyapi.com/";
+const apiUrl = process.env.API_URL;
 
 const options = {
   method: "GET",

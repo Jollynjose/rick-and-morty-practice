@@ -21,7 +21,7 @@ app.use(
 );
 
 app.use((req, res, next) => {
-  res.status(404).send("<h1>error 404 not found</h1>");
+  res.status(404).redirect("/404.html");
 });
 
 app.listen(process.env.PORT, () => {

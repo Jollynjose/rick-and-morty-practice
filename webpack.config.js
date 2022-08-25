@@ -2,14 +2,17 @@ const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
   mode: process.env.NODE_ENV || "development",
-  entry: "./server.js",
+  entry: {
+    index: ["./src/index", "webpack-hot-middleware/client?reload=true"],
+  },
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
-    publicPath: "",
+    publicPath: "/",
   },
   resolve: {
     extensions: [".js"],
@@ -27,9 +30,14 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.html$/i,
+        loader: "html-loader",
+      },
     ],
   },
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: "./src/pages/home.html",
       filename: "home.html",
@@ -47,7 +55,14 @@ module.exports = {
       template: "./src/pages/404.html",
       filename: "404.html",
     }),
+    new HtmlWebpackPlugin({
+      template: "./src/pages/login.html",
+      filename: "login.html",
+    }),
     new ESLintPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
+    new Dotenv({
+      path: "./.env", // Path to .env file (this is the default)
+      safe: true, // load .env.example (defaults to "false" which does not use dotenv-safe)
+    }),
   ],
 };
