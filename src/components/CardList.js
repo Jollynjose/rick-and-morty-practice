@@ -10,6 +10,8 @@ const onAddDetail = () => {
         const id = clicked.getAttribute("id");
         await Detail(+id);
         list.removeEventListener("click", onAddDetail);
+      } else if (clicked?.classList.contains("card_fav")) {
+        //add and remove favorites logic
       }
     });
   }

@@ -10,16 +10,18 @@ import { app } from "./config";
 
 const form = document.getElementById("form");
 const logout = document.getElementById("logout");
+
 class Auth {
   constructor(firebaseApp) {
-    this.auth = getAuth(firebaseApp);
+    this.firebaseAuth = getAuth(firebaseApp);
     this.monitorAuthState();
-    logout.addEventListener("click", this.logOut.bind(this), { once: true });
+    if (logout)
+      logout.addEventListener("click", this.logOut.bind(this), { once: true });
   }
 
   async signUp(email = "", password = "") {
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      await createUserWithEmailAndPassword(this.firebaseAuth, email, password);
     } catch (err) {
       alert(err);
     }
@@ -47,29 +49,32 @@ class Auth {
       const publicPaths = ["/login.html", "/signup.html"];
       if (user) {
         if (publicPaths.includes(path)) window.location.href = "/home.html";
-      } else {
-        if (!publicPaths.includes(path)) window.location.href = "/login.html";
+        this.user = user;
+      } else if (!publicPaths.includes(path) && path !== "/404.html") {
+        window.location.href = "/login.html";
       }
     });
   }
 }
 
-const auth = new Auth(app);
+export const auth = new Auth(app);
 
 export const register = () => {
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    await auth.signUp(email, password);
-  });
+  if (form)
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      await auth.signUp(email, password);
+    });
 };
 
 export const login = () => {
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    await auth.logIn(email, password);
-  });
+  if (form)
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      await auth.logIn(email, password);
+    });
 };
