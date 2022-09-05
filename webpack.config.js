@@ -59,6 +59,10 @@ module.exports = {
       template: "./src/pages/login.html",
       filename: "login.html",
     }),
+    new HtmlWebpackPlugin({
+      template: "./src/pages/signup.html",
+      filename: "signup.html",
+    }),
     new ESLintPlugin(),
     new Dotenv({
       path: "./.env", // Path to .env file (this is the default)

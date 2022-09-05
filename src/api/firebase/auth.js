@@ -1,32 +1,75 @@
 import {
   createUserWithEmailAndPassword,
   getAuth,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
+
 import { app } from "./config";
 
-const auth = getAuth(app);
+const form = document.getElementById("form");
+const logout = document.getElementById("logout");
+class Auth {
+  constructor(firebaseApp) {
+    this.auth = getAuth(firebaseApp);
+    this.monitorAuthState();
+    logout.addEventListener("click", this.logOut.bind(this), { once: true });
+  }
 
-export const signUp = async (email = "", password = "") => {
-  const createdUser = await createUserWithEmailAndPassword(
-    auth,
-    email,
-    password
-  );
-};
-
-export const logOut = async () => {
-  const userLogOut = await signOut(auth);
-};
-
-export const logIn = async (email = "", password = "") => {
-  const user = await signInWithEmailAndPassword(auth, email, password).catch(
-    (e) => {
-      console.error(e);
+  async signUp(email = "", password = "") {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+      alert(err);
     }
-  );
-  return user;
+  }
+
+  async logOut() {
+    try {
+      await signOut(this.auth);
+    } catch (err) {
+      alert(err);
+    }
+  }
+
+  async logIn(email = "", password = "") {
+    try {
+      await signInWithEmailAndPassword(this.auth, email, password);
+    } catch (err) {
+      alert(err);
+    }
+  }
+
+  async monitorAuthState() {
+    onAuthStateChanged(this.auth, (user) => {
+      const path = window.location.pathname || "";
+      const publicPaths = ["/login.html", "/signup.html"];
+      if (user) {
+        if (publicPaths.includes(path)) window.location.href = "/home.html";
+      } else {
+        if (!publicPaths.includes(path)) window.location.href = "/login.html";
+      }
+    });
+  }
+}
+
+const auth = new Auth(app);
+
+export const register = () => {
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    await auth.signUp(email, password);
+  });
 };
 
-export const getData = () => {};
+export const login = () => {
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    await auth.logIn(email, password);
+  });
+};
