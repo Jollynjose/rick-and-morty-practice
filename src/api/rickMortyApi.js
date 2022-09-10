@@ -98,3 +98,26 @@ export const getCharacterById = async (id) => {
     character.created
   );
 };
+
+export const getFavoriteChracters = async (ids = []) => {
+  const data = await fetch(`${apiUrl}/api/character/${ids}`, options);
+  const charactersParsed = await data.json();
+
+  if (Array.isArray(charactersParsed)) {
+    const characters = charactersParsed.map(
+      ({ id, name, status, species, image }) => {
+        return new Character(id, name, status, species, image);
+      }
+    );
+    return characters;
+  }
+
+  const character = new Character(
+    charactersParsed.id,
+    charactersParsed.name,
+    charactersParsed.status,
+    charactersParsed.species,
+    charactersParsed.image
+  );
+  return [character];
+};

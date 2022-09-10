@@ -10,10 +10,10 @@ import { app } from "./config";
 
 const form = document.getElementById("form");
 const logout = document.getElementById("logout");
-
+const firebaseAuth = getAuth(app);
 class Auth {
-  constructor(firebaseApp) {
-    this.firebaseAuth = getAuth(firebaseApp);
+  constructor(firebaseAuth) {
+    this.firebaseAuth = firebaseAuth;
     this.monitorAuthState();
     if (logout)
       logout.addEventListener("click", this.logOut.bind(this), { once: true });
@@ -29,7 +29,7 @@ class Auth {
 
   async logOut() {
     try {
-      await signOut(this.auth);
+      await signOut(this.firebaseAuth);
     } catch (err) {
       alert(err);
     }
@@ -37,19 +37,19 @@ class Auth {
 
   async logIn(email = "", password = "") {
     try {
-      await signInWithEmailAndPassword(this.auth, email, password);
+      await signInWithEmailAndPassword(this.firebaseAuth, email, password);
     } catch (err) {
       alert(err);
     }
   }
 
-  async monitorAuthState() {
-    onAuthStateChanged(this.auth, (user) => {
+  monitorAuthState() {
+    onAuthStateChanged(this.firebaseAuth, (user) => {
       const path = window.location.pathname || "";
       const publicPaths = ["/login.html", "/signup.html"];
       if (user) {
         if (publicPaths.includes(path)) window.location.href = "/home.html";
-        this.user = user;
+        sessionStorage.setItem("userId", user.email);
       } else if (!publicPaths.includes(path) && path !== "/404.html") {
         window.location.href = "/login.html";
       }
@@ -57,7 +57,7 @@ class Auth {
   }
 }
 
-export const auth = new Auth(app);
+export const auth = new Auth(firebaseAuth);
 
 export const register = () => {
   if (form)

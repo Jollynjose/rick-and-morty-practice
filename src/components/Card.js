@@ -1,3 +1,5 @@
+import { database } from "../api/firebase/firestore";
+
 const statusToColor = {
   Alive: "green",
   Dead: "red",
@@ -7,15 +9,23 @@ const getCharacterColor = (status = "") => {
   return statusToColor[status] || "grey";
 };
 
+const isFavorite = (id = 0) => {
+  return database.favorites.includes(id);
+};
+
 export const Card = (character) => {
   const template = document.getElementById("card--template");
   const cardNodeTemplate = document.importNode(template.content, true);
 
   const [cardArticle] = cardNodeTemplate.children;
-  const [cardFigure, cardDiv] = cardArticle.children;
+  const [cardFigure, cardDiv, cardAnchor] = cardArticle.children;
 
   const [cardFigureImg] = cardFigure.children;
   const [cardDivH3, cardDivH6] = cardDiv.children;
+  if (cardAnchor !== undefined && isFavorite(+character.id)) {
+    cardAnchor.dataset.action = "removeFavorite";
+    cardAnchor.innerText = "Remove Favorite";
+  }
 
   cardArticle.setAttribute("id", character.id);
 

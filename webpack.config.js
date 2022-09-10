@@ -63,6 +63,10 @@ module.exports = {
       template: "./src/pages/signup.html",
       filename: "signup.html",
     }),
+    new HtmlWebpackPlugin({
+      template: "./src/pages/favorites.html",
+      filename: "favorites.html",
+    }),
     new ESLintPlugin(),
     new Dotenv({
       path: "./.env", // Path to .env file (this is the default)

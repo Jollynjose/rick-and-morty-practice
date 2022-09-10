@@ -1,24 +1,52 @@
 import { Card, Detail } from "./";
 import { getListCharacters, getCountByCharacters } from "../api/rickMortyApi";
+import { database } from "../api/firebase/firestore";
 
-const onAddDetail = () => {
-  const list = document.querySelector(".list");
-  if (list) {
-    list.addEventListener("click", async (e) => {
-      const clicked = e.target.closest("article");
-      if (clicked?.classList.contains("card")) {
-        const id = clicked.getAttribute("id");
-        await Detail(+id);
-        list.removeEventListener("click", onAddDetail);
-      } else if (clicked?.classList.contains("card_fav")) {
-        //add and remove favorites logic
-      }
-    });
+const loader = document.querySelector(".loader");
+class CardListEvents {
+  constructor(cardListElem) {
+    this.cardListElem = cardListElem;
+    cardListElem.addEventListener("click", this.onClick.bind(this));
   }
-};
+
+  static init(cardListElem) {
+    if (cardListElem) return new CardListEvents(cardListElem);
+    return null;
+  }
+  async openDetail(target) {
+    const id = target.getAttribute("id");
+    if (id) await Detail(+id);
+  }
+
+  async setFavorites(target, cardTarget) {
+    const id = cardTarget.getAttribute("id");
+    const action = target.dataset.action;
+    if (action === "addFavorite") {
+      await database.addFavorites(+id);
+      target.innerText = "Remove Favorite";
+      target.dataset.action = "removeFavorite";
+      return;
+    }
+    await database.removeFavorite(+id);
+    target.innerText = "Add Favorite";
+    target.dataset.action = "addFavorite";
+  }
+
+  async onClick(event) {
+    const cardTarget = event.target.closest(".card");
+    const isfavoriteTag = event.target.classList.contains("card__fav");
+    if (isfavoriteTag) {
+      await this.setFavorites(event.target, cardTarget);
+    } else {
+      await this.openDetail(cardTarget);
+    }
+    this.cardListElem.removeEventListener("click", this.onClick.bind(this));
+  }
+}
+
+CardListEvents.init(document.querySelector(".list"));
 
 const onAddCharacters = () => {
-  const loader = document.querySelector(".loader");
   let page = 1;
   if (loader) {
     window.addEventListener("scroll", async () => {
@@ -26,16 +54,15 @@ const onAddCharacters = () => {
         document.documentElement;
       const bottomScroll = scrollTop + clientHeight;
       if (bottomScroll >= scrollHeight) {
-        loader.classList.toggle("show");
+        loader.classList.toggle("hide");
         const count = await getCountByCharacters();
         const list = document.querySelector(".list__items");
         const totalItems = list.childElementCount - 1;
-
         if (totalItems !== count) {
           const isCache = localStorage.length > 0;
           await CardList(++page, isCache);
         }
-        loader.classList.toggle("show");
+        loader.classList.toggle("hide");
       }
     });
   }
@@ -62,7 +89,6 @@ export const CardList = async (page = 1, isCache = false) => {
     });
   }
   await charactersLocal(page);
+  loader.classList.toggle("hide");
+  onAddCharacters();
 };
-
-onAddCharacters();
-onAddDetail();
