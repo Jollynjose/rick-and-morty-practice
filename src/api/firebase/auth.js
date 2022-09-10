@@ -8,7 +8,6 @@ import {
 
 import { app } from "./config";
 
-const form = document.getElementById("form");
 const logout = document.getElementById("logout");
 const firebaseAuth = getAuth(app);
 class Auth {
@@ -60,21 +59,21 @@ class Auth {
 export const auth = new Auth(firebaseAuth);
 
 export const register = () => {
-  if (form)
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      await auth.signUp(email, password);
-    });
+  const form = document.getElementById("form");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    await auth.signUp(email, password);
+  });
 };
 
 export const login = () => {
-  if (form)
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      await auth.logIn(email, password);
-    });
+  const form = document.getElementById("form");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    await auth.logIn(email, password);
+  });
 };

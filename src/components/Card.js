@@ -13,7 +13,7 @@ const isFavorite = (id = 0) => {
   return database.favorites.includes(id);
 };
 
-export const Card = (character) => {
+export const Card = (character, isFavoritePage = false) => {
   const template = document.getElementById("card--template");
   const cardNodeTemplate = document.importNode(template.content, true);
 
@@ -23,8 +23,11 @@ export const Card = (character) => {
   const [cardFigureImg] = cardFigure.children;
   const [cardDivH3, cardDivH6] = cardDiv.children;
   if (cardAnchor !== undefined && isFavorite(+character.id)) {
-    cardAnchor.dataset.action = "removeFavorite";
-    cardAnchor.innerText = "Remove Favorite";
+    if (isFavoritePage) cardAnchor.dataset.actionUi = "remove";
+    else {
+      cardAnchor.dataset.action = "removeFavorite";
+      cardAnchor.innerText = "Remove Favorite";
+    }
   }
 
   cardArticle.setAttribute("id", character.id);

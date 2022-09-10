@@ -13,23 +13,33 @@ class CardListEvents {
     if (cardListElem) return new CardListEvents(cardListElem);
     return null;
   }
+
   async openDetail(target) {
     const id = target.getAttribute("id");
     if (id) await Detail(+id);
+  }
+
+  async addFavorite(id, target) {
+    await database.addFavorites(+id);
+    target.innerText = "Remove Favorite";
+    target.dataset.action = "removeFavorite";
+  }
+
+  async removeFavorite(id, target, cardTarget) {
+    await database.removeFavorite(+id);
+    target.innerText = "Add Favorite";
+    target.dataset.action = "addFavorite";
+    if (target.dataset.actionUi === "remove") cardTarget.remove();
   }
 
   async setFavorites(target, cardTarget) {
     const id = cardTarget.getAttribute("id");
     const action = target.dataset.action;
     if (action === "addFavorite") {
-      await database.addFavorites(+id);
-      target.innerText = "Remove Favorite";
-      target.dataset.action = "removeFavorite";
+      this.addFavorite(id, target);
       return;
     }
-    await database.removeFavorite(+id);
-    target.innerText = "Add Favorite";
-    target.dataset.action = "addFavorite";
+    this.removeFavorite(id, target, cardTarget);
   }
 
   async onClick(event) {

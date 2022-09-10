@@ -9,7 +9,7 @@ export const FavoritesList = async () => {
   if (favoritesIds.length) {
     const favoriteChracters = await getFavoriteChracters(favoritesIds);
     favoriteChracters.forEach((chracter) => {
-      Card(chracter);
+      Card(chracter, true);
     });
     loader.classList.toggle("hide");
     return;
