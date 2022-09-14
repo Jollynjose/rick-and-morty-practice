@@ -7,7 +7,7 @@ I made this practice with objective to practices DOM stuff
 Clone the project
 
 ```bash
-  git clone https://link-to-project
+  git clone https://github.com/Jollynjose/rick-and-morty-practice.git
 ```
 
 Go to the project directory
