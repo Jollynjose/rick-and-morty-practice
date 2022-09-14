@@ -80,7 +80,7 @@ export const getListCharacters = async (page = 1) => {
   return characters;
 };
 
-export const getCharacterById = async (id) => {
+export const getCharacterById = async (id = 0) => {
   const data = await fetch(`${apiUrl}/api/character/${id}`, options);
   const character = await data.json();
   return new Character(

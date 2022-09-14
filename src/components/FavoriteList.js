@@ -2,10 +2,10 @@ import { database } from "../api/firebase/firestore";
 import { getFavoriteChracters } from "../api/rickMortyApi";
 import { Card } from "./Card";
 
-const loader = document.querySelector(".loader");
-
 export const FavoritesList = async () => {
   const favoritesIds = database.favorites;
+  const loader = document.querySelector(".loader");
+
   if (favoritesIds.length) {
     const favoriteChracters = await getFavoriteChracters(favoritesIds);
     favoriteChracters.forEach((chracter) => {

@@ -8,12 +8,15 @@ import {
 
 import { app } from "./config";
 
-const logout = document.getElementById("logout");
-const firebaseAuth = getAuth(app);
 class Auth {
-  constructor(firebaseAuth) {
-    this.firebaseAuth = firebaseAuth;
+  constructor(app) {
+    this.firebaseAuth = getAuth(app);
     this.monitorAuthState();
+    this.setLogOutEvent();
+  }
+
+  setLogOutEvent() {
+    const logout = document.getElementById("logout");
     if (logout)
       logout.addEventListener("click", this.logOut.bind(this), { once: true });
   }
@@ -56,7 +59,7 @@ class Auth {
   }
 }
 
-export const auth = new Auth(firebaseAuth);
+export const auth = new Auth(app);
 
 export const register = () => {
   const form = document.getElementById("form");

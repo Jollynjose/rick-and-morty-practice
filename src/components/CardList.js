@@ -1,8 +1,6 @@
 import { Card, Detail } from "./";
 import { getListCharacters, getCountByCharacters } from "../api/rickMortyApi";
 import { database } from "../api/firebase/firestore";
-
-const loader = document.querySelector(".loader");
 class CardListEvents {
   constructor(cardListElem) {
     this.cardListElem = cardListElem;
@@ -57,25 +55,23 @@ class CardListEvents {
 CardListEvents.init(document.querySelector(".list"));
 
 const onAddCharacters = () => {
+  const loader = document.querySelector(".loader");
   let page = 1;
-  if (loader) {
-    window.addEventListener("scroll", async () => {
-      const { scrollTop, scrollHeight, clientHeight } =
-        document.documentElement;
-      const bottomScroll = scrollTop + clientHeight;
-      if (bottomScroll >= scrollHeight) {
-        loader.classList.toggle("hide");
-        const count = await getCountByCharacters();
-        const list = document.querySelector(".list__items");
-        const totalItems = list.childElementCount - 1;
-        if (totalItems !== count) {
-          const isCache = localStorage.length > 0;
-          await CardList(++page, isCache);
-        }
-        loader.classList.toggle("hide");
+  window.addEventListener("scroll", async () => {
+    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+    const bottomScroll = scrollTop + clientHeight;
+    if (bottomScroll >= scrollHeight) {
+      loader.classList.toggle("hide");
+      const count = await getCountByCharacters();
+      const list = document.querySelector(".list__items");
+      const totalItems = list.childElementCount - 1;
+      if (totalItems !== count) {
+        const isCache = localStorage.length > 0;
+        await CardList(++page, isCache);
       }
-    });
-  }
+      loader.classList.toggle("hide");
+    }
+  });
 };
 const charactersLocal = async (page = 1) => {
   const nextCharacters = await getListCharacters(++page);
@@ -84,6 +80,7 @@ const charactersLocal = async (page = 1) => {
 };
 
 export const CardList = async (page = 1, isCache = false) => {
+  const loader = document.querySelector(".loader");
   if (isCache) {
     const charactersJSON = localStorage.getItem("characters");
     if (charactersJSON) {
