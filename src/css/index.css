@@ -1,6 +1,7 @@
 @import url("./about.css");
 @import url("./list.css");
 @import url("./detail.css");
+@import url("./form.css");
 
 body,
 html {
@@ -16,7 +17,7 @@ html {
 .random--section {
   height: 320px;
   margin: 0 0 2rem 0;
-  padding: .125rem 0 0 0;
+  padding: 0.125rem 0 0 0;
 }
 .loader--random {
   width: 60px;
@@ -51,4 +52,8 @@ nav > ul > li > a:hover {
 }
 section {
   padding: 1rem;
+}
+
+.hidden {
+  display: none;
 }

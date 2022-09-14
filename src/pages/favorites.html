@@ -5,41 +5,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List</title>
+    <title>Favorites</title>
 </head>
 
 <body>
     <header>
         <nav>
             <ul>
-                <li><a class="links" href="./home.html">Home</a></li>
+                <li><a class="links" href="./list.html">Back to List</a></li>
                 <li><a id="logout" class="links" href="#">Log Out</a></li>
-                <li><a class="links" href="./favorites.html">Fav</a></li>
             </ul>
         </nav>
     </header>
     <main>
-        <section class="detail">
-            <template id="detail--template">
-                <div class="detail__information">
-                    <figure class="detail__information--figure">
-                        <img>
-                        <figcaption></figcaption>
-                    </figure>
-                    <ul class="detail__information--list">
-                        <li>Status: </li>
-                        <li>Species: </li>
-                        <li>Type: </li>
-                        <li>Gender: </li>
-                        <li>Origin: </li>
-                        <li>Location: </li>
-                    </ul>
-                </div>
-                <button class="detail__button">Close</button>
-            </template>
-        </section>
-
-
         <section class="list">
             <section class="list__items">
                 <template id="card--template">
@@ -51,20 +29,16 @@
                             <h3 class="card__info__name"></h3>
                             <h6 class="card__info__status">-</h6>
                         </div>
-                        <button type="button" data-action="addFavorite" class="card__fav">Add Favorite</button>
+                        <button type="button" data-action="removeFavorite" class="card__fav">Remove Favorite</button>
                     </article>
                 </template>
             </section>
-
             <section class="list__more">
-
                 <div class="loader"></div>
             </section>
-
         </section>
-
     </main>
-</body>
 
+</body>
 
 </html>

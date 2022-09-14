@@ -1,6 +1,6 @@
 import { Character, PaginationCharacter } from "./../models";
 
-const apiUrl = "https://rickandmortyapi.com/";
+const apiUrl = process.env.API_URL;
 
 const options = {
   method: "GET",
@@ -80,7 +80,7 @@ export const getListCharacters = async (page = 1) => {
   return characters;
 };
 
-export const getCharacterById = async (id) => {
+export const getCharacterById = async (id = 0) => {
   const data = await fetch(`${apiUrl}/api/character/${id}`, options);
   const character = await data.json();
   return new Character(
@@ -97,4 +97,27 @@ export const getCharacterById = async (id) => {
     character.url,
     character.created
   );
+};
+
+export const getFavoriteChracters = async (ids = []) => {
+  const data = await fetch(`${apiUrl}/api/character/${ids}`, options);
+  const charactersParsed = await data.json();
+
+  if (Array.isArray(charactersParsed)) {
+    const characters = charactersParsed.map(
+      ({ id, name, status, species, image }) => {
+        return new Character(id, name, status, species, image);
+      }
+    );
+    return characters;
+  }
+
+  const character = new Character(
+    charactersParsed.id,
+    charactersParsed.name,
+    charactersParsed.status,
+    charactersParsed.species,
+    charactersParsed.image
+  );
+  return [character];
 };

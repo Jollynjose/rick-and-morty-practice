@@ -1,0 +1,28 @@
+#form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 0.1rem;
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 10rem;
+}
+
+#form > input {
+  width: 11rem;
+  box-sizing: border-box;
+  padding: 0.5rem;
+}
+
+.btn {
+  width: 11rem;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  height: 90vh;
+  position: relative;
+}

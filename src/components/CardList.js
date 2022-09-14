@@ -1,42 +1,77 @@
 import { Card, Detail } from "./";
 import { getListCharacters, getCountByCharacters } from "../api/rickMortyApi";
-
-const onAddDetail = () => {
-  const list = document.querySelector(".list");
-  if (list) {
-    list.addEventListener("click", async (e) => {
-      const clicked = e.target.closest("article");
-      if (clicked?.classList.contains("card")) {
-        const id = clicked.getAttribute("id");
-        await Detail(+id);
-        list.removeEventListener("click", onAddDetail);
-      }
-    });
+import { database } from "../api/firebase/firestore";
+class CardListEvents {
+  constructor(cardListElem) {
+    this.cardListElem = cardListElem;
+    cardListElem.addEventListener("click", this.onClick.bind(this));
   }
-};
+
+  static init(cardListElem) {
+    if (cardListElem) return new CardListEvents(cardListElem);
+    return null;
+  }
+
+  async openDetail(target) {
+    const id = target.getAttribute("id");
+    if (id) await Detail(+id);
+  }
+
+  async addFavorite(id, target) {
+    await database.addFavorites(+id);
+    target.innerText = "Remove Favorite";
+    target.dataset.action = "removeFavorite";
+  }
+
+  async removeFavorite(id, target, cardTarget) {
+    await database.removeFavorite(+id);
+    target.innerText = "Add Favorite";
+    target.dataset.action = "addFavorite";
+    if (target.dataset.actionUi === "remove") cardTarget.remove();
+  }
+
+  async setFavorites(target, cardTarget) {
+    const id = cardTarget.getAttribute("id");
+    const action = target.dataset.action;
+    if (action === "addFavorite") {
+      this.addFavorite(id, target);
+      return;
+    }
+    this.removeFavorite(id, target, cardTarget);
+  }
+
+  async onClick(event) {
+    const cardTarget = event.target.closest(".card");
+    const isfavoriteTag = event.target.classList.contains("card__fav");
+    if (isfavoriteTag) {
+      await this.setFavorites(event.target, cardTarget);
+    } else {
+      await this.openDetail(cardTarget);
+    }
+    this.cardListElem.removeEventListener("click", this.onClick.bind(this));
+  }
+}
+
+CardListEvents.init(document.querySelector(".list"));
 
 const onAddCharacters = () => {
   const loader = document.querySelector(".loader");
   let page = 1;
-  if (loader) {
-    window.addEventListener("scroll", async () => {
-      const { scrollTop, scrollHeight, clientHeight } =
-        document.documentElement;
-      const bottomScroll = scrollTop + clientHeight;
-      if (bottomScroll >= scrollHeight) {
-        loader.classList.toggle("show");
-        const count = await getCountByCharacters();
-        const list = document.querySelector(".list__items");
-        const totalItems = list.childElementCount - 1;
-
-        if (totalItems !== count) {
-          const isCache = localStorage.length > 0;
-          await CardList(++page, isCache);
-        }
-        loader.classList.toggle("show");
+  window.addEventListener("scroll", async () => {
+    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+    const bottomScroll = scrollTop + clientHeight;
+    if (bottomScroll >= scrollHeight) {
+      loader.classList.toggle("hide");
+      const count = await getCountByCharacters();
+      const list = document.querySelector(".list__items");
+      const totalItems = list.childElementCount - 1;
+      if (totalItems !== count) {
+        const isCache = localStorage.length > 0;
+        await CardList(++page, isCache);
       }
-    });
-  }
+      loader.classList.toggle("hide");
+    }
+  });
 };
 const charactersLocal = async (page = 1) => {
   const nextCharacters = await getListCharacters(++page);
@@ -45,6 +80,7 @@ const charactersLocal = async (page = 1) => {
 };
 
 export const CardList = async (page = 1, isCache = false) => {
+  const loader = document.querySelector(".loader");
   if (isCache) {
     const charactersJSON = localStorage.getItem("characters");
     if (charactersJSON) {
@@ -60,7 +96,6 @@ export const CardList = async (page = 1, isCache = false) => {
     });
   }
   await charactersLocal(page);
+  loader.classList.toggle("hide");
+  onAddCharacters();
 };
-
-onAddCharacters();
-onAddDetail();
