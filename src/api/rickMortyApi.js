@@ -1,6 +1,4 @@
-import { Character, PaginationCharacter } from "./../models";
-
-const apiUrl = "https://rickandmortyapi.com/";
+const { API_URL: apiUrl } = require("../config");
 
 const options = {
   method: "GET",
@@ -9,7 +7,7 @@ const options = {
   },
 };
 
-export const getCountByCharacters = async () => {
+const getCountByCharacters = async () => {
   const query = `
   query{
     characters(page: 1){
@@ -34,7 +32,7 @@ export const getCountByCharacters = async () => {
   return paginationCharacter;
 };
 
-export const getRandomCharacterImage = async () => {
+const getRandomCharacterImage = async () => {
   const paginationCharacter = await getCountByCharacters();
 
   const randomNumber = Math.floor(Math.random() * paginationCharacter.count);
@@ -47,7 +45,7 @@ export const getRandomCharacterImage = async () => {
   return imageUrl;
 };
 
-export const getListCharacters = async (page = 1) => {
+const getListCharacters = async (page = 1) => {
   const query = `query{
   characters(page: ${page}){
     results{
@@ -80,7 +78,7 @@ export const getListCharacters = async (page = 1) => {
   return characters;
 };
 
-export const getCharacterById = async (id) => {
+const getCharacterById = async (id) => {
   const data = await fetch(`${apiUrl}/api/character/${id}`, options);
   const character = await data.json();
   return new Character(
@@ -97,4 +95,11 @@ export const getCharacterById = async (id) => {
     character.url,
     character.created
   );
+};
+
+module.exports = {
+  getCharacterById,
+  getCountByCharacters,
+  getListCharacters,
+  getRandomCharacterImage,
 };
