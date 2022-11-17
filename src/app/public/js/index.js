@@ -1,24 +1,24 @@
 "use strict";
 class App {
   constructor() {
+    this.init();
+  }
+
+  init() {
     window.addEventListener("load", async () => {
       const path = window.location.pathname || "";
       switch (path) {
-        case "/list.html":
-        case "/about":
-        case "/home":
-        case "/":
-          this.randomImage();
-
+        case "/list":
+          this.listPage();
           break;
         default:
+          this.mainPage();
           break;
       }
-      console.log(ejs);
     });
   }
 
-  randomImage() {
+  mainPage() {
     const image = document.querySelector(".random__img");
     const figure = document.querySelector(".random--figure");
     const [, figureCaption] = figure.children;
@@ -32,5 +32,7 @@ class App {
       }
     }, 100);
   }
+
+  listPage() {}
 }
 new App();

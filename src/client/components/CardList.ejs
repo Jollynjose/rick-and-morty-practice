@@ -12,6 +12,6 @@
             </article>
         </template>
         <% characters.forEach(character=> { %>
-            <% include("./Card", {character}) %>
+            <%- include("./Card", {character}) %>
                 <% }) %>
     </section>

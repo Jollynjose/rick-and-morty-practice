@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const { config } = require("../config");
 const pageRouter = require("../server/routes/pages");
 const authRouter = require("../server/routes/auth");
+const characterRouter = require("../server/routes/characters");
 
 const app = express();
 
@@ -18,8 +19,9 @@ app.use(morgan("combined"));
 app.use(cookieParser());
 app.use(express.static(__dirname + "/public"));
 
-app.use(pageRouter);
 app.use("/api", authRouter);
+app.use("/api", characterRouter);
+app.use(pageRouter);
 
 app.listen(config.PORT, () => {
   console.log(`App listening at port ${config.PORT}`);

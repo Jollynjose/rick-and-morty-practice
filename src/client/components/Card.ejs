@@ -6,8 +6,18 @@
         <h3 class="card__info__name">
             <%= character.name %>
         </h3>
-        <h6 class="card__info__status">
-            <%= character.species %>-<%= character.status %>
-        </h6>
+        <% if(character.status==='Alive' ){ %>
+            <h6 class="card__info__status" style="color: green;">
+                <%= character.species %>-<%= character.status %>
+            </h6>
+            <% } else if(character.status==='Dead' ){ %>
+                <h6 class="card__info__status" style="color: red;">
+                    <%= character.species %>-<%= character.status %>
+                </h6>
+                <% } else { %>
+                    <h6 class="card__info__status" style="color: gray;">
+                        <%= character.species %>-<%= character.status %>
+                    </h6>
+                    <% } %>
     </div>
 </article>
