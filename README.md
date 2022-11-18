@@ -1,6 +1,10 @@
 # Rick and morty practice
 
-I made this practice with objective to practices DOM stuff.
+I made this projects using rick and morty API with the purpose
+to practices main topics of vanilla javascript such as SSR,
+DOM API, CSR, bundles with webpack, and es6+ concepts.
+This application have a login/register, multiple pages and
+using cache techniques.
 
 ## Run Locally
 
