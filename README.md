@@ -4,6 +4,14 @@ I made this projects using rick and morty API with the purpose
 to practices main topics of vanilla javascript such as SSR,
 DOM API, CSR, bundles with webpack, and es6+ concepts.
 
+## Features
+
+- Implement CSR using webpack and webpack middlewares for the bundles.
+- Manage routes with express.
+- Use Firebase as a database and authorization API.
+- Implement login/register.
+- Improve the perfomance.
+
 ## Run Locally
 
 Clone the project
