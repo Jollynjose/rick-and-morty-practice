@@ -1,6 +1,7 @@
 const {
   getRandomCharacterImage,
   getListCharacters,
+  getCountByCharacters,
 } = require("../services/axios");
 
 const homePageController = async (req, res) => {
@@ -18,10 +19,10 @@ const homePageController = async (req, res) => {
     res.render("home", params);
   } catch (error) {
     res.status(500).json({
-      message: error,
+      message: error.message,
       status: 500,
     });
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -33,12 +34,13 @@ const listPageController = async (req, res) => {
       { title: "About", url: "/about" },
     ];
     const characters = await getListCharacters();
-
+    const charactersCount = await getCountByCharacters();
     const params = {
       links,
       title: "List",
       characters,
     };
+    res.cookie("charactersCount", JSON.stringify(charactersCount));
     res.render("list", params);
   } catch (error) {
     res.status(500).json({

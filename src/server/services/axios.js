@@ -27,13 +27,13 @@ const getCountByCharacters = async () => {
     });
     const characters = response.data.characters;
     const { PaginationCharacter } = await import(
-      "../../app/models/PaginationCharacter.mjs"
+      "../../app/public/js/models/PaginationCharacter.mjs"
     );
 
     const characterInfo = characters.info;
     const characterCount = characterInfo.count;
 
-    const paginationCharacter = new PaginationCharacter(1, characterCount);
+    const paginationCharacter = new PaginationCharacter(2, characterCount);
     return paginationCharacter;
   } catch (error) {
     throw new Error(error);
@@ -60,7 +60,9 @@ const getCharacterById = async (id = 1) => {
   try {
     const response = await rickAndMortyApi.get(`/api/character/${id}`);
     const character = response.data;
-    const { Character } = await import("../../app/models/Chracter.mjs");
+    const { Character } = await import(
+      "../../app/public/js/models/Chracter.mjs"
+    );
     return new Character(
       character.id,
       character.name,
@@ -101,7 +103,9 @@ const getListCharacters = async (page = 1) => {
     const charactersResponseRaw = response.data.characters;
 
     const charactersResponseResults = charactersResponseRaw.results;
-    const { Character } = await import("../../app/models/Chracter.mjs");
+    const { Character } = await import(
+      "../../app/public/js/models/Chracter.mjs"
+    );
     const characters = charactersResponseResults.map(
       ({ id, name, status, species, image }) => {
         return new Character(id, name, status, species, image);
@@ -117,4 +121,5 @@ module.exports = {
   getRandomCharacterImage,
   getCharacterById,
   getListCharacters,
+  getCountByCharacters,
 };

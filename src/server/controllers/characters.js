@@ -1,6 +1,6 @@
 const { getCharacterById, getListCharacters } = require("../services/axios");
 
-const charactersController = async (req, res) => {
+const getCharacters = async (req, res) => {
   try {
     const { page = 1 } = req.query;
     if (Number(page) === NaN || page === "0")
@@ -18,7 +18,7 @@ const charactersController = async (req, res) => {
   }
 };
 
-const characterController = async (req, res) => {
+const getCharacter = async (req, res) => {
   try {
     const id = req.params.id;
     if (Number(id) === NaN || id === "0")
@@ -37,6 +37,6 @@ const characterController = async (req, res) => {
 };
 
 module.exports = {
-  characterController,
-  charactersController,
+  getCharacter,
+  getCharacters,
 };

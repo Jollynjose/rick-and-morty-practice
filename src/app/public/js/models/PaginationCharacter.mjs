@@ -3,4 +3,8 @@ export class PaginationCharacter {
     this.page = page;
     this.count = count;
   }
+
+  nextPage() {
+    this.page = this.page + 1;
+  }
 }
