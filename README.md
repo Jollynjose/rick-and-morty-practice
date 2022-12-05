@@ -6,7 +6,7 @@ DOM API, CSR, bundles with webpack, and es6+ concepts.
 
 ## Features
 
-- SSR and CSR with ejs.
+- SSR with ejs.
 - Using new folder structure and separe bussinness logic and application logic
 - Implementing a atomics components and layouts.
 - Improve Cache techniques.
