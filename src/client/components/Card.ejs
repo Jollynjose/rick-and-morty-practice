@@ -1,0 +1,29 @@
+<article class="card" data-id="<%= character.id %>">
+    <figure class="card__figure">
+        <img src="<%= character.image %> " alt="<%= character.name %>">
+    </figure>
+    <div class="card__info">
+        <h3 class="card__info__name">
+            <%= character.name %>
+        </h3>
+        <% if(character.status==='Alive' ){ %>
+            <h6 class="card__info__status" style="color: green;">
+                <%= character.species %>-<%= character.status %>
+            </h6>
+            <% } else if(character.status==='Dead' ){ %>
+                <h6 class="card__info__status" style="color: red;">
+                    <%= character.species %>-<%= character.status %>
+                </h6>
+                <% } else { %>
+                    <h6 class="card__info__status" style="color: gray;">
+                        <%= character.species %>-<%= character.status %>
+                    </h6>
+                    <% } %>
+    </div>
+    <% if (character.isFavorite) { %>
+        <button class="card__button" data-action="remove" type="button">Remove Favorite</button>
+        <% } else {%>
+            <button class="card__button" data-action="add" type="button">Add Favorite</button>
+            <%}%>
+
+</article>

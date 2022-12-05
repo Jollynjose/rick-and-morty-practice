@@ -1,0 +1,15 @@
+<%- include("../components/Layout/UpperLayout", {links, title}); %>
+    <main>
+        <%- include("../components/form", {buttonText, redirect}); %>
+    </main>
+    <script type="module">
+        const firebaseConfig = {
+            apiKey: "<%= FIREBASE.API_KEY%>",
+            authDomain: "<%= FIREBASE.AUTH_DOMAIN%>",
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+    </script>
+    <%- include("../components/Layout/UnderLayout"); %>

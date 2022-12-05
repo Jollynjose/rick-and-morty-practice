@@ -3,34 +3,57 @@
 I made this projects using rick and morty API with the purpose
 to practices main topics of vanilla javascript such as SSR,
 DOM API, CSR, bundles with webpack, and es6+ concepts.
-This application have a login/register, multiple pages and
-using cache techniques.
+
+## Features
+
+- SSR with ejs.
+- Using new folder structure and separe bussinness logic and application logic
+- Implementing a atomics components and layouts.
+- Improve Cache techniques.
 
 ## Run Locally
 
 Clone the project
 
 ```bash
-  git clone https://github.com/Jollynjose/rick-and-morty-Practice.git
+  git clone https://github.com/Jollynjose/rick-and-morty-practice.git
 ```
 
 Go to the project directory
 
 ```bash
-  cd rick--and--morty-Practice
+  cd rick-and-morty-practice
 ```
 
-Install live-server in your global enviroment
+Install dependencies
 
 ```bash
-  npm install -g live-server
+  yarn install
 ```
 
-Run the project
+Set Envs Variables
+
+```
+PORT=
+FIREBASE_API_KEY=
+FIREBASE_AUTH_DOMAIN=
+FIREBASE_DATABASE_URL=
+FIREBASE_PROJECT_ID=
+FIREBASE_STORAGE_BUCKET=
+FIREBASE_MESSAGINGSENDER_ID=
+FIREBASE_APP_ID=
+API_URL=
+```
+
+Start the server
 
 ```bash
-  live-server
+  yarn dev
 ```
+
+## Reminders
+
+- For the moment, Only use dev mode.
 
 ## Authors
 
