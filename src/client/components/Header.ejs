@@ -1,11 +1,23 @@
 <header>
     <nav>
         <ul>
-            <% links.forEach(link=> { %>
-                <li><a class="links" href="<%=link.url%>">
-                        <%=link.title%>
-                    </a></li>
-                <% }) %>
+            <% if (title !=="Register" && title !=="Login" ) { %>
+                <% links.forEach(link=> { %>
+                    <li><a class="links" href="<%=link.url%>">
+                            <%=link.title%>
+                        </a></li>
+                    <% }) %>
+                        <li>
+                            <a id="signout" class="links" href="#">
+                                Sign Out
+                            </a>
+                        </li>
+                        <% } else { %>
+                            <li>
+                                <%= links[0].title %>
+                            </li>
+                            <%}%>
+
         </ul>
     </nav>
 </header>

@@ -82,7 +82,7 @@ const getCharacterById = async (id = 1) => {
   }
 };
 
-const getListCharacters = async (page = 1) => {
+const getListCharacters = async (page = 1, favorites = []) => {
   try {
     const query = `query{
   characters(page: ${page}){
@@ -106,9 +106,13 @@ const getListCharacters = async (page = 1) => {
     const { Character } = await import(
       "../../app/public/js/models/Chracter.mjs"
     );
+
     const characters = charactersResponseResults.map(
       ({ id, name, status, species, image }) => {
-        return new Character(id, name, status, species, image);
+        const isFavorite = favorites.includes(+id);
+        const character = new Character(id, name, status, species, image);
+        character.isFavorite = isFavorite;
+        return character;
       }
     );
     return characters;
@@ -117,9 +121,39 @@ const getListCharacters = async (page = 1) => {
   }
 };
 
+const getFavoriteChracters = async (ids = []) => {
+  const response = await rickAndMortyApi.get(`/api/character/${ids}`);
+  const charactersRaw = response.data;
+
+  const { Character } = await import("../../app/public/js/models/Chracter.mjs");
+
+  if (Array.isArray(charactersRaw)) {
+    const characters = charactersRaw.map(
+      ({ id, name, status, species, image }) => {
+        const character = new Character(id, name, status, species, image);
+        character.isFavorite = true;
+        return character;
+      }
+    );
+    return characters;
+  }
+
+  const character = new Character(
+    charactersRaw.id,
+    charactersRaw.name,
+    charactersRaw.status,
+    charactersRaw.species,
+    charactersRaw.image
+  );
+  character.isFavorite = true;
+
+  return [character];
+};
+
 module.exports = {
   getRandomCharacterImage,
   getCharacterById,
   getListCharacters,
   getCountByCharacters,
+  getFavoriteChracters,
 };

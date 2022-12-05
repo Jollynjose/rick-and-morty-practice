@@ -1,5 +1,3 @@
-import { state } from "../models/index.mjs";
-
 const onToggleHoverCards = () => {
   const cards = document.querySelectorAll(".card");
   cards.forEach((value) => {
@@ -42,9 +40,7 @@ const onRemoveDetail = () => {
   }
 };
 
-export const Detail = () => {
-  const character = state.character;
-
+export const DetailView = (character = {}) => {
   const template = document.getElementById("detail--template");
   const detailNodeTemplate = document.importNode(template.content, true);
 

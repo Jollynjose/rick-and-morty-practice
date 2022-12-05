@@ -1,7 +1,11 @@
+const { config } = require("../../config");
+const { getUserByToken } = require("../../storage/firebase/auth");
+const { getFavorites } = require("../../storage/firebase/firestore");
 const {
   getRandomCharacterImage,
   getListCharacters,
   getCountByCharacters,
+  getFavoriteChracters,
 } = require("../services/axios");
 
 const homePageController = async (req, res) => {
@@ -30,10 +34,12 @@ const listPageController = async (req, res) => {
   try {
     const links = [
       { title: "Home", url: "/" },
-      { title: "Favorites", url: "/" },
-      { title: "About", url: "/about" },
+      { title: "Favorites", url: "/favorites" },
     ];
-    const characters = await getListCharacters();
+
+    const userEmail = res.locals.email;
+    const favorites = await getFavorites(userEmail);
+    const characters = await getListCharacters(1, favorites);
     const charactersCount = await getCountByCharacters();
     const params = {
       links,
@@ -71,8 +77,63 @@ const aboutPageController = async (req, res) => {
   }
 };
 
+const favoritesPageController = async (req, res) => {
+  try {
+    const email = res.locals.email;
+    const favorites = await getFavorites(email);
+    const favoriteChracters = await getFavoriteChracters(favorites);
+    const params = {
+      title: "Favorites",
+      characters: favoriteChracters,
+      links: [{ title: "Back", url: "/list" }],
+    };
+
+    res.render("favorites", params);
+  } catch (error) {}
+};
+
+const registerPageController = (req, res) => {
+  const { API_KEY, AUTH_DOMAIN } = config.FIREBASE;
+  const params = {
+    links: [{ title: "Register", url: "#" }],
+    title: "Register",
+    buttonText: "Sign Up",
+    redirect: {
+      link: "/login",
+      text: "Back to login",
+    },
+    FIREBASE: {
+      API_KEY,
+      AUTH_DOMAIN,
+    },
+  };
+
+  res.render("register", params);
+};
+
+const loginPageController = (req, res) => {
+  const { API_KEY, AUTH_DOMAIN } = config.FIREBASE;
+  const params = {
+    links: [{ title: "Login", url: "#" }],
+    title: "Login",
+    buttonText: "Sign In",
+    redirect: {
+      link: "/register",
+      text: "Go to sign up",
+    },
+    FIREBASE: {
+      API_KEY,
+      AUTH_DOMAIN,
+    },
+  };
+  res.render("login", params);
+};
+
 module.exports = {
   homePageController,
   listPageController,
   aboutPageController,
+  loginPageController,
+  registerPageController,
+  favoritesPageController,
 };

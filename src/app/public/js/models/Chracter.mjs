@@ -11,7 +11,8 @@ export class Character {
     location = {},
     episode = [],
     url = "",
-    created = ""
+    created = "",
+    isFavorite = false
   ) {
     this.id = id;
     this.name = name;
@@ -25,6 +26,7 @@ export class Character {
     this.episode = episode;
     this.url = url;
     this.created = created;
+    this.isFavorite = isFavorite;
   }
 
   getInfo(key) {

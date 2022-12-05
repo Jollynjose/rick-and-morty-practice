@@ -9,7 +9,7 @@ const config = {
     PROJECT_ID: process.env.FIREBASE_PROJECT_ID,
     STORAGE_BUCKET: process.env.FIREBASE_STORAGE_BUCKET,
     MESSAGING_SENDER_ID: process.env.FIREBASE_MESSAGINGSENDER_ID,
-    FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
+    APP_ID: process.env.FIREBASE_APP_ID,
   },
   API_URL: process.env.API_URL,
 };

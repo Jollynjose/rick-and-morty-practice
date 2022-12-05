@@ -1,7 +1,7 @@
-const Status404 = (req, res) => {
+const Status404Middleware = (req, res) => {
   res.status(404).render("404", { title: "Not Found", links: undefined });
 };
 
 module.exports = {
-  Status404,
+  Status404Middleware,
 };

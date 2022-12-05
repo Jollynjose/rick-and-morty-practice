@@ -20,4 +20,10 @@
                     </h6>
                     <% } %>
     </div>
+    <% if (character.isFavorite) { %>
+        <button class="card__button" data-action="remove" type="button">Remove Favorite</button>
+        <% } else {%>
+            <button class="card__button" data-action="add" type="button">Add Favorite</button>
+            <%}%>
+
 </article>

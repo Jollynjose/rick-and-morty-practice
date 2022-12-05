@@ -3,15 +3,25 @@ const {
   homePageController,
   listPageController,
   aboutPageController,
+  loginPageController,
+  registerPageController,
+  favoritesPageController,
 } = require("../../controllers/pages");
-const { Status404 } = require("../../middleware/Status404");
+const { checkUserMiddleware } = require("../../middleware/auth");
+const { Status404Middleware } = require("../../middleware/Status404");
 
-router.get(["/", "/home"], homePageController);
+router.get(["/", "/home"], checkUserMiddleware, homePageController);
 
-router.get("/list", listPageController);
+router.get("/list", checkUserMiddleware, listPageController);
 
-router.get("/about", aboutPageController);
+router.get("/favorites", checkUserMiddleware, favoritesPageController);
 
-router.use(Status404);
+router.get("/about", checkUserMiddleware, aboutPageController);
+
+router.get("/login", checkUserMiddleware, loginPageController);
+
+router.get("/register", checkUserMiddleware, registerPageController);
+
+router.use(Status404Middleware);
 
 module.exports = router;

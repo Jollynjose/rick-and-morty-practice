@@ -1,3 +1,4 @@
+const { getFavorites } = require("../../storage/firebase/firestore");
 const { getCharacterById, getListCharacters } = require("../services/axios");
 
 const getCharacters = async (req, res) => {
@@ -6,7 +7,9 @@ const getCharacters = async (req, res) => {
     if (Number(page) === NaN || page === "0")
       throw new Error("Incorrect parameter");
 
-    const characters = await getListCharacters(page);
+    const email = res.locals.email;
+    const favorites = await getFavorites(email);
+    const characters = await getListCharacters(page, favorites);
 
     res.status(200).json(characters);
   } catch (error) {
